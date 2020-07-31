@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>清除浮动</title>
+    <style>
+        .parent{
+            border: 1px solid #000;
+        }
+        .child{
+            width: 200px;
+            height: 200px;
+            background: red;
+            float: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="parent">
+        <div class="child"></div>
+    </div>
+    
+   <div>
+        1 产生浮动的原因
+        子元素使用了float，导致父元素无法被撑开
+
+        2 解决办法
+            父元素固定高度
+            父元素+overflow:hidden
+            给父元素里 最后加上一个div，并设置clear:both
+   </div>
+</body>
+</html>
