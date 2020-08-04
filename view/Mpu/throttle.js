@@ -52,7 +52,6 @@ function throttle(fn, delay, atleast) {
             perious = null;
             fn()
         } else {
-
             clearTimeout(timer)
             timer = setTimeout(function () {
                 fn()
