@@ -22,9 +22,9 @@ bar(10);
 <button class="btn">按钮</button> */}
 
 var btn = document.getElementsByClassName("btn");
-for(var i = 0,length = btn.length;i<length;i++){
-    (function(x){
-        btn[i].onclick=function(){
+for (var i = 0, length = btn.length; i < length; i++) {
+    (function (x) {
+        btn[i].onclick = function () {
             alert(x);
         }
     })(i)
