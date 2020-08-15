@@ -26,3 +26,7 @@ Object.prototype.toString.call(undefined); // "[object Undefined]"
 Object.prototype.toString.call("123");// "[object String]"
 Object.prototype.toString.call(123);// "[object Number]"
 Object.prototype.toString.call(true);// "[object Boolean]"
+Object.prototype.toString.call([223]); // "[Object Array]"
+Object.prototype.toString.call({}); // "[Object Object]"
+
+
