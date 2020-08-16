@@ -46,7 +46,8 @@ prototype 是 函数独有属性
                           prorotype                                     __proto__                                   __proto__
                      ---------------->                               -------------->                             -------------> null
 Person(构造函数)                         Person.prototype(原型对象)                     Object.prototype(原型对象)                  
-                     <----------------                                                                           --------------> Object                                     constructor                                                                                constructor
+                     <----------------                                                                           --------------> Object   
+                       constructor                                                                                constructor
            __porto__          
 person1 ----------------->    Person.prototype(原型对象)                         
 
