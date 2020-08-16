@@ -15,12 +15,15 @@ __proto__ （隐式原型、笨蛋 proto）
     })
 let obj = new Object(); //{}
 
-（1）(实例)对象的_proto_属性,它指向构造函数的原型对象(prototype)。 obj._proto_ === Object.prototype;
+（1）(实例)对象的__proto__属性,它指向构造函数的原型对象(prototype)。 obj._proto_ === Object.prototype;
 
 当我们访问一个对象上的某个属性时，它会检查该对象是否有这个属性，如果有就使用它。如果没有，就会继续访问对象的原型，以及该对象的原型的原型，依次层层向上寻找，直到找到这个属性或者到达原型链的末尾(null)。如果找不到属性就返回undefined。
 
 var o = {a: 1};
 // 原型链如下 o -->Objct.prototype -->null
+
+
+Object.prototype.__proto__  ====null
 
 
 
