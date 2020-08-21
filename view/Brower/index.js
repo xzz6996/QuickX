@@ -41,4 +41,18 @@
         }
     （2） Nginx 反向代理
     （3） CORS
+     (4) $.ajax()  dataType:"jsonp" 
+     // jsonp 字段含义为服务器通过什么字段获取回调函数的名称
+     jsonp: 'callback',
+     // 声明本地回调函数的名称，jquery 默认随机生成一个函数名称
+     jsonpCallback: 'jsonpCallback'
+     
+     (5) axios 
+        header(“Access-Control-Allow-Origin:*”)   
+        "/api":{ 
+            target: 'http://192.168.3.6:7777', 
+            changeOrigin: true,
+            pathRewrite:{'^/api':''}
+        }
+
         
