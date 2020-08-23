@@ -1,19 +1,29 @@
-// typeof
-typeof "333"   //string
-typeof 33      //number 
-typeof true   //boolean
-typeof undefined //undefined
-typeof function () { } === 'function';
+// typeof 
+typeof "333"   //"string"
+typeof 33      //"number" 
+typeof true   //"boolean"
+typeof undefined //"undefined"
 
-typeof [5, 6, 7] //object 
-typeof { a: 5 }   //object
-typeof null    //object
+typeof function () {}  //function
+
+typeof []   //object 
+typeof {}   //object
+typeof null // "object"
 
 
 //instanceof 检测构造函数的prototype属性是否出现在某个实例对象的原型链上
+function C(){}
+function D(){}
+
+var o = new C()
+
+o instanceof C //true
+o instanceof D //false
 
 "321" instanceof String //false
 new String("321") instanceof String //true
+
+
 
 
 //Object.prototype.toString.call()
