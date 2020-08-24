@@ -5,7 +5,8 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
     entry: {
-
+        a :"./view/Webpack/1.js",
+        b :"./view/Webpack/2.js"
     },
     output: {
         filename: '[name].js',

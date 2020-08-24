@@ -23,7 +23,7 @@ var o = {a: 1};
 // 原型链如下 o -->Objct.prototype -->null
 
 
-Object.prototype.__proto__  ====null
+Object.prototype.__proto__  === null
 
 
 
