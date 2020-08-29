@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../vue.js"></script>
+</head>
+
+<body>
+    <div id="root">
+        <div>{{name}}</div>
+        <div>{{obj.aa}}</div>
+    </div>
+    <script>
+
+        function JVue(options) {
+            // _下划线开头代表内部数据 $开头代表只读数据
+            this._data = options.data;
+            this._el = options.el;
+            this.$el = this._templateDom = document.querySelector(this._el);
+            this._parent = this._templateDom.parentNode;
+            this.render()
+        }
+        JVue.prototype.render = function () {
+            this.compiler()
+        }
+        JVue.prototype.compiler = function () {
+            let realHTMLDom = this._templateDom.cloneNode(true)
+            compiler(realHTMLDom, this._data)
+            this.update(realHTMLDom)
+        }
+        JVue.prototype.update = function (real) {
+            this._parent.replaceChild(real, document.querySelector(this._el))
+        }
+        function compiler(tem, data) {
+            let childNodes = tem.childNodes;
+            for (let i = 0; i < childNodes.length; i++) {
+                let type = childNodes[i].nodeType;
+                if (type == 1) {
+                    compiler(childNodes[i], data)
+                } else if (type == 3) {
+                    let txt = childNodes[i].nodeValue;
+                    txt = txt.replace(rkuohao, function (_, g) {
+                        let path = g.trim();
+                        return getValueByPath(data, path);
+                    })
+                    childNodes[i].nodeValue = txt;
+                }
+            }
+        }
+        let rkuohao = /\{\{(.+?)\}\}/g;//判断是否含有{{}}
+
+        function getValueByPath(obj, path) {  //解决 xxx.yyy.ccc
+            let paths = path.split('.');
+            let res = obj, prop;
+            while ( prop = paths.shift()) {
+                res = res[prop]
+            }
+            return res;
+        }
+        function createGetValueByPath(path) {  //函数柯里化实现 (通过字符串路径访问对象的成员)
+            let paths = path.split('.');
+            return function getValueByPath(obj) {
+                let res = obj, prop;
+                while (prop = paths.shift()) {
+                    res = res[prop]
+                }
+                return res;
+            }
+        }
+
+
+
+
+        let vm = new JVue({
+            el: "#root",
+            data: {
+                name: "xzz",
+                obj: {
+                    aa: "ccc"
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

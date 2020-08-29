@@ -1,0 +1,66 @@
+li<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../vue.js"></script>
+</head>
+
+<body>
+    <div id="root">
+        <div>{{name}}</div>
+    </div>
+    <script>
+        
+        /*
+        步骤拆解
+        1 拿到模板
+        2 拿到数据
+        3 将数据与模板结合，得到的是HTML元素(DOM元素)
+        4 放到页面中 
+        */
+        let temNode = document.querySelector('#root');
+        let data = {
+            name: "xzz"
+        }
+        //3 将数据放在模板里;递归
+        //案列中的template是Dom元素;
+        //真正的vue源码中，template是DOM-->字符串模板-->VNode-->真正的Dom;
+        function compiler(template, data) {
+            let childNodes = template.childNodes;
+            for (let i = 0; i < childNodes.length; i++) {
+                let type = childNodes[i].nodeType; //1 元素3 文本节点
+                if (type == 3) {
+                    //文本节点 判断里面是否含有{{}}插值
+                    let txt = childNodes[i].nodeValue;
+                    //判断是否含有{{}}
+                    txt = txt.replace(rkuohao, function (_, g) {
+                        let key = g.trim();
+                        let value = data[key];
+                        //将{{xxx}} 用这个值替换
+                        return value
+                    })
+                    childNodes[i].nodeValue = txt;
+                } else if (type == 1) {
+                    //元素 ，考虑子元素，是否需要将子元素进行判断
+                    compiler(childNodes[i], data)
+                }
+            }
+        }
+        let rkuohao = /\{\{(.+?)\}\}/g;//判断是否含有{{}}
+        
+        let genNode = temNode.cloneNode(true)
+
+        compiler(genNode,data)
+        console.log(root,genNode)
+
+        root.parentNode.replaceChild(genNode,root)
+
+
+        
+    </script>
+</body>
+
+</html>

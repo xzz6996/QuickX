@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="root">
+        <div class="aa">
+            hello
+        </div>
+        <div id="bb">
+            <span>333</span>
+        </div>
+    </div>
+    <script>
+    // 为什么要使用虚拟dom？性能
+
+     class VNode{
+        constructor(tag,data,value,type){
+            this.tag=tag&&tag.toLowerCase(); //标签名 div,p
+            this.data=data; // {} 属性
+            this.value=value; //文本值
+            this.type=type;  //类型
+            this.children=[];
+        }
+        appendChild(vnode){
+            this.children.push(vnode)
+        }
+     }
+
+     //递归 将真正的dom转化为 虚拟dom
+    function getVNode(node){
+        let nodeType =node.nodeType;
+        let _vnode;
+        if(nodeType==1){  
+            let nodeName = node.nodeName;
+            let attrs = node.attributes;
+            let _attrObj={}
+            for(let i=0;i<attrs.length;i++){
+                _attrObj[attrs[i].nodeName] = attrs[i].nodeValue
+            }
+            _vnode = new VNode(nodeName,_attrObj,undefined,nodeType);
+
+            let childNodes = node.childNodes;
+            for(let j=0;j<childNodes.length;j++){
+                _vnode.appendChild(getVNode(childNodes[j]))
+            }
+        }else if(nodeType==3){
+            _vnode=new VNode(undefined,undefined,node.nodeValue,nodeType)
+        }
+        return _vnode
+    }
+    let root =document.querySelector("#root")
+    let vroot= getVNode(root)
+
+    console.log(vroot)
+
+
+
+    //将虚拟dom转化为真正的dom
+    function parseVNode(node){
+        let type=node.type;
+        let _dom;
+        if(type==1){
+            let nodeName=node.tag;
+            _dom = document.createElement(nodeName);
+            let atts =node.data;
+            for(var key in atts){
+                _dom.setAttribute(key,atts[key])
+            }
+            let children=node.children;
+            for(let i=0;i<children.length;i++){
+                _dom.appendChild(parseVNode(children[i]))
+            }
+        }else if(type==3){
+            _dom = document.createTextNode(node.value)
+        }
+        return _dom
+    }
+
+    let dom = parseVNode(vroot)
+    console.log(dom)
+
+    </script>
+</body>
+
+</html>
