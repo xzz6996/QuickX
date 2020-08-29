@@ -62,22 +62,21 @@
 
 
     //将虚拟dom转化为真正的dom
-    function parseVNode(node){
-        let type=node.type;
+    function parseVNode(vnode){
+        let type=vnode.type;
         let _dom;
         if(type==1){
-            let nodeName=node.tag;
-            _dom = document.createElement(nodeName);
-            let atts =node.data;
-            for(var key in atts){
+            _dom = document.createElement(vnode.tag);
+            let atts =vnode.data;
+            Object.keys(atts).forEach(key=>{
                 _dom.setAttribute(key,atts[key])
-            }
-            let children=node.children;
-            for(let i=0;i<children.length;i++){
-                _dom.appendChild(parseVNode(children[i]))
-            }
+            })
+            let children=vnode.children;
+            children.forEach(item=>{
+                _dom.appendChild(parseVNode(item))
+            })
         }else if(type==3){
-            _dom = document.createTextNode(node.value)
+            _dom = document.createTextNode(vnode.value)
         }
         return _dom
     }
