@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="root">
+        <div>{{name}}</div>
+        <div>
+            <span>{{obj.age}}</span>
+        </div>
+    </div>
+    <script>
+        function JVue(options) {
+            this._data = options.data;
+            this._template = document.querySelector(options
+                .el)
+            this.mount(); //挂载
+        }
+        JVue.prototype.mount = function () {
+            this.render = this.createRenderFn();
+            //render 利用ast和数据生成一个vnode(带数据)
+
+            this.mountComponent()
+        }
+        JVue.prototype.mountComponent=function() {
+            let mount = () => {
+                this.update( this.render() )
+            }
+            mount.call(this)
+        }
+        JVue.prototype.update = function () {
+            // 将虚拟dom渲染到页面中，这里涉及 diff
+
+        }
+        JVue.prototype.createRenderFn = function () {
+            //生成render函数，目的是缓存的ast (我么这里使用vnode来模拟)
+
+            let ast = getVNode(this._template);//生成一个{{}}的vnode
+
+            return function render() {
+                let _vnode = combine(ast, this._data);// 生成一个带数据的vnode
+                return _vnode
+            }
+        }
+
+
+
+
+        class VNode {
+            constructor(tag, data, value, type) {
+                this.tag = tag && tag.toLowerCase(); //标签名 div,p
+                this.data = data; // {} 属性
+                this.value = value; //文本值
+                this.type = type;  //类型
+                this.children = [];
+            }
+            appendChild(vnode) {
+                this.children.push(vnode)
+            }
+        }
+        function getVNode(vnode) {
+            let type = vnode.nodeType;
+            let _vnode;
+            if (type == 3) {
+                _vnode = new VNode(undefined, undefined, vnode.nodeValue, type)
+            } else if (type == 1) {
+                let attrs = vnode.attributes;
+                let _attrObj = {};
+                for (let i = 0; i < attrs.length; i++) {
+                    _attrObj[attrs[i].nodeName] = attrs[i].nodeValue;
+                }
+
+                _vnode = new VNode(vnode.nodeName, _attrObj, undefined, type)
+                let childNodes = vnode.childNodes;
+                childNodes.forEach(item => {
+                    _vnode.appendChild(getVNode(item))
+                })
+            }
+            return _vnode
+        }
+        let rkuohao = /\{\{(.+?)\}\}/g;
+
+        function getValueByPath(path, data) {
+            //根据字符串访问对象的成员
+            let paths = path.split('.');
+            let res = data, prop = null;
+            while (prop = paths.shift()) {
+                res = res[prop]
+            }
+            return res
+        }
+
+        function combine(vnode, data) {
+            let _type = vnode.type;
+            let _value = vnode.value;
+            let _data = vnode.data;
+            let _tag = vnode.tag;
+            let _children = vnode.children;
+            let _vnode = null;
+            if (_type == 3) {
+                _value = _value.replace(rkuohao, function (_, g) {
+                    return getValueByPath(g.trim(), data)
+                })
+                _vnode = new VNode(_tag, _data, _value, _type)
+            } else if (_type == 1) {
+                _vnode = new VNode(_tag, _data, _value, _type)
+                _children.forEach(_subvnode => _vnode.appendChild(combine(_subvnode, data)));
+            }
+            return _vnode
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        new JVue({
+            el: "#root",
+            data: {
+                name: "xzz",
+                obj: {
+                    age: "13"
+                }
+            }
+        })
+
+    </script>
+</body>
+
+</html>
