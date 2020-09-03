@@ -16,9 +16,12 @@
     </div>
     <script>
         function JVue(options) {
+            this._options=options;
             this._data = options.data;
-            this._template = document.querySelector(options
+            let elm = document.querySelector(options
                 .el)
+            this._template = elm;
+            this._parent=elm.parentNode;
             this.mount(); //挂载
         }
         JVue.prototype.mount = function () {
@@ -33,9 +36,11 @@
             }
             mount.call(this)
         }
-        JVue.prototype.update = function () {
+        JVue.prototype.update = function (vnode) {
             // 将虚拟dom渲染到页面中，这里涉及 diff
-
+            let realDom = parseVnode(vnode);
+            
+            this._parent.replaceChild(realDom,document.querySelector(this._options.el))
         }
         JVue.prototype.createRenderFn = function () {
             //生成render函数，目的是缓存的ast (我么这里使用vnode来模拟)
@@ -114,7 +119,24 @@
             return _vnode
         }
 
-
+        function parseVnode(vnode){
+            let type =vnode.type;
+            let _vdom=null;
+            if(type == 3){
+                _vdom = document.createTextNode(vnode.value)
+            }else if(type==1){
+                _vdom =document.createElement(vnode.tag)
+                let attrs = vnode.data;
+                Object.keys(attrs).forEach(key=>{
+                    _vdom.setAttribute(key,attrs[key])
+                })
+                let children = vnode.children;
+                children.forEach(item=>{
+                    _vdom.appendChild(parseVnode(item))
+                })
+            }
+            return _vdom
+        }
 
 
 
