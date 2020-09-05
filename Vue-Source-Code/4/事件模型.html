@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        //全局的event 对象,提供 on off emit
+        var event = (function () {
+             eventObj = {};
+            return {
+                on(type, handler) {
+                    //接收，存储
+                    (eventObj[type] || (eventObj[type] = [])).push(handler)
+                },
+                off(type, handler) {
+                    //移除
+                    // 1 没有参数 则移除所有
+                    // 2 只有type，则移除所有type类型的事件
+                    // 3 type，handler都存在，则移除type类型里的handler事件
+                    if (arguments.length == 0) {
+                        eventObj = {};
+                    } else if (arguments.length == 1) {
+                        eventObj[type] = []
+                    } else if (arguments.length == 2) {
+                        let _events = eventObj[type];
+                        if (!_events) return
+                        // 倒着循环 数组的 序号不会受到影响
+                        for (let i = _events.length; i >= 0; i--) {
+                            if (_events[i] === handler) {
+                                _events.splice(i, 1)
+                            }
+                        }
+                    }
+                },
+                emit(type) {
+                    //触发，调用
+                    let args = Array.prototype.slice().call(arguments,1);
+                    let _events = eventObj[type];
+                    if (!_events) return
+                    for(let i=0;i<args.length;i++){
+                        _events[i].apply(null,args)
+                    }
+                }
+            }
+        })()
+
+
+
+    </script>
+</body>
+
+</html>
