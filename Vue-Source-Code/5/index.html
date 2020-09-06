@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./watcher.js"></script>
+    <script src="./Dep.js"></script>
+    <script src="./vnode.js"></script>
+    <script src="./compiler.js"></script>
+    <script src="./jvue.js"></script>
+    <script src="./initrender.js"></script>
+    <script src="./initData.js"></script>
+</head>
+
+<body>
+    <div id="root">
+        <div>{{name}}</div>
+        <div>
+            <span>{{obj.age}}</span>
+        </div>
+        <div>
+            {{children}}
+        </div>
+    </div>
+    <script>
+
+        let vm = new JVue({
+            el: "#root",
+            data: {
+                name: "xzz",
+                obj: {
+                    age: "13"
+                },
+                children: [
+                    {
+                        age: "13"
+                    }
+                ]
+            },
+
+        })
+
+    </script>
+</body>
+
+</html>
