@@ -125,6 +125,15 @@
             }
         }
 
+
+        let arr_methods =Object.create(Array.prototype);
+        let Arr_Method =['push','pop','shift','unshift'];
+        Arr_Method.forEach(method=>{
+            arr_methods[method] =function(){
+                return Array.prototype[method].apply(this,arguments)
+            }
+        })
+        
         class VNode {
             constructor(tag, data, value, type) {
                 this.tag = tag && tag.toLowerCase(); //标签名 div,p
