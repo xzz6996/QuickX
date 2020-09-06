@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        function f1() {
+            console.log('原始功能')
+        }
+        let _f = f1;
+        f1 = function () {
+            _f();
+            console.log("新功能")
+        }
+    </script>
+
+    <script>
+        //vue响应式中 数组的那些方法
+        let Arr_Method = ['pop', 'push', 'shift'];
+        //vue源码中数据响应式的时候 1 __proto__ 2 def()
+        //先考虑第一种情况 value.__proto__ = arr_method
+        let arr_method = Object.create(Array.prototype)
+
+        Arr_Method.forEach(item => {
+            arr_method[item] = function () {
+                return Array.prototype[item].apply(this, arguments)
+            }
+        })
+
+
+    </script>
+</body>
+
+</html>
