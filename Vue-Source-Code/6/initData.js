@@ -49,7 +49,7 @@ let arr_method = Object.create(Array.prototype);
 let Arr_Mthods = ['pop', 'push', 'unshift', 'shift', 'reserve'];
 Arr_Mthods.forEach(method => {
     arr_method[method] = function () {
-        for (var i = 0; i < arguments[i]; i++) {
+        for (var i = 0; i < arguments.length; i++) {
             observe(arguments[i])
         }
         Array.prototype[method].apply(this, arguments);
