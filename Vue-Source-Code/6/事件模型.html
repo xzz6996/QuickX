@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        var event = (function () {
+            eventObjs = {};
+            return {
+                on(type, handler) {
+                    (eventObjs[type] || (eventObjs[type] = [])).push(handler)
+                },
+                off(type, handler) {
+                    if(arguments.length === 0){
+                        eventObjs={}
+                    }else if(arguments.length ===1){
+                        eventObjs[type] = [];
+                    }else{
+                        if(!eventObjs[type])return
+                        //倒着循环
+                        for(var i=eventObjs[type].length;i>=0;i--){
+                            var node = eventObjs[type][i];
+                            if(node == handler){
+                                eventObjs[type].splice(i,1)
+                            }
+                        }
+                    }
+                },
+                emit(type) {
+                    if(!eventObjs[type])return
+                    let events=eventObjs[type];
+                    let args =Array.from(arguments)
+                    for(var i=0;i<events.length;i++){
+                        events[i].apply(null,args)
+                    }
+                }
+            }
+        })()
+    </script>
+</body>
+
+</html>

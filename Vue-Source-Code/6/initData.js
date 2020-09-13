@@ -27,19 +27,23 @@ function observe(data) {
 /**
  * defineReactive 数据响应式化
  * @param {Object|Array} data 
- * @param {*} prop 
+ * @param {String} prop 
  * @param {*} value 
  */
 function defineReactive(data, prop, value) {
     if (typeof value === 'object' && value != null) {
         observe(value)
     }
+    let dep = new Dep();
+    dep.__propName__ = prop;
     Object.defineProperty(data, prop, {
         get() {
-            return value
+            dep.depend();
+            return value;
         },
         set(newVal) {
-            value = newVal
+            value = newVal;
+            dep.notify();
         }
     })
 }

@@ -29,5 +29,5 @@ JVue.prototype.mountComponent=function() {
     let mount = ()=>{
         this.update(this.render())
     }
-    mount.call(this)
+    new Watcher(this,mount);
 }
