@@ -1,4 +1,4 @@
-let id;
+let watcherid;
 /**
  * Watcher 观察者,用来 发射更新的方法
  */
@@ -10,7 +10,7 @@ class Watcher {
     constructor(vm, expOrfn) {
         this.vm = vm; 
         this.getter = expOrfn;
-        this.id = id++;
+        this.id = watcherid++;
         this.deps = []; //当前的依赖项，包含多个属性的dep
         this.get()
     }
