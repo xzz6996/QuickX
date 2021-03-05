@@ -39,6 +39,7 @@ function defineReactive(data, prop, value) {
     Object.defineProperty(data, prop, {
         get() {
             dep.depend();
+            console.log(dep)
             return value;
         },
         set(newVal) {

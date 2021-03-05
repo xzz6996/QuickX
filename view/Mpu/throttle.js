@@ -66,6 +66,16 @@ window.onresize = throttle(testFn, 100, 500)
 
 
 
+function ppp(fn,delay) {
+    var time = Date.now()
+    return function () {
+        var ags = arguments,content = this,ntime =Date.now()
+        if(ntime-time>=delay){
+            time = Date.now()
+           return fn.apply(content,ags)
+        }
+    }
+}
 
 
 
