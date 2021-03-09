@@ -39,5 +39,5 @@ handler包含
     set(target,property,value,receiver) //设置属性值操作的捕获器
     has(target,prop)                    //针对in操作符的代理方法
     getPrototypeOf()  代理 --> Object.getPrototypeOf() //返回对象的原型
-    setPrototypeOf()  代理 --> Object.setProptotypeOf()
+    setPrototypeOf()  代理 --> Object.setProptotypeOf() //设置对象的原型
     defineProperty()  代理 --> Object.defineProperty()
