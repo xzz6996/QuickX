@@ -23,7 +23,7 @@
                     }else{
                         if(!eventObjs[type])return
                         //倒着循环
-                        for(var i=eventObjs[type].length;i>=0;i--){
+                        for(var i=eventObjs[type].length-1;i>=0;i--){
                             var node = eventObjs[type][i];
                             if(node == handler){
                                 eventObjs[type].splice(i,1)
