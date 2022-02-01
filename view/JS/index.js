@@ -20,7 +20,7 @@ JS类型分为 基本数据类型、引用数据类型。
 /*
     浅拷贝
 */
-Object.assign()  //多层就是浅拷贝，一层就是深拷贝
+Object.assign() //多层就是浅拷贝，一层就是深拷贝
 
 Array.protptype.slice()
 Array.prototype.concat()
@@ -32,39 +32,39 @@ Array.prototype.concat()
 */
 JSON.parse(JSON.stringify());
 
-$extend(true,target,...object1)
+$extend(true, target, ...object1)
 
 
-function deepClone(data,hash = new WeakMap){
+function deepClone(data, hash = new WeakMap) {
     // 值为null,则返回
-    if(data === null){
+    if (data === null) {
         return
     }
     // 判断 '不常用的' 引用数据类型,并返回
-    const type = ['Date','RegEpx','Set','WeakSet','Map','WeakMap'];
+    const type = ['Date', 'RegEpx', 'Set', 'WeakSet', 'Map', 'WeakMap'];
 
-    if(type.includes(data.constructor)){  // FilterType(data)
+    if (type.includes(data.constructor)) { // FilterType(data)
         return new data.constructor(data)
     }
 
     // 不是 object类型的就 return
-    if(typeof data !== 'object'){
+    if (typeof data !== 'object') {
         return data
     }
-    
+
     // 避免成环
-    if(hash.has(data)){
-      return  hash.get(data);   
+    if (hash.has(data)) {
+        return hash.get(data);
     }
 
-    
+
     let result = new data.constructor();
 
-    hash.set(data,result)
+    hash.set(data, result)
 
-    for(var i in data){
-        if(data.hasOwnProperty(i)){
-            result[i]= deepClone(data[i],hash)
+    for (var i in data) {
+        if (data.hasOwnProperty(i)) {
+            result[i] = deepClone(data[i], hash)
         }
     }
     return result
@@ -87,7 +87,3 @@ function FilterType(data) {
 
 事件委派 (将事件统一绑定给共同的祖先元素，减少事件绑定的次数，提供程序的性能)
 */
-
-
-
-

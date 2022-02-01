@@ -1,12 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+
 <body>
     <script src="./原型.js"></script>
     <!-- <script src="./this.js"></script> -->
 </body>
+<script>
+    function unique(data) {
+        if (!data || !Array.isArray(data)) return
+        let result = [],
+            arr = [];
+        for (var i = 0; i < data.length; i++) {
+            var node = JSON.stringify(data[i]);
+            let index = result.findIndex(item => item == node)
+            if (index < 0) {
+                result.push(node);
+                arr.push(data[i]);
+            }
+        }
+        result = null;
+        return arr;
+    }
+    unique(
+        [55, 55, [5],[5],[{ a: "333"}],[{a: "333"}],{obj: "aaa",cc: "aa"}, {obj: "aaa",cc: "aa"}, {obj: "222",cc: "aa"}]
+    )
+</script>
+
 </html>

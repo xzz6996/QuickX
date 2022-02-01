@@ -1,8 +1,8 @@
-let id;
+let depid;
 class Dep {
     constructor() {
         this.subs = []; //存储的是当前Dep相关联的watcher
-        this.id = id++;
+        this.id = depid++;
     }
     addSub(sub) {
         //添加一个watcher

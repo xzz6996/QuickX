@@ -7,5 +7,5 @@ function JVue(options) {
     this._parent = dom.parentNode;
 
     this.initData(); //初始化
-    this.mount();    //挂载
+    this.mount(); //挂载
 }

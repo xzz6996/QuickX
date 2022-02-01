@@ -2,7 +2,7 @@
  [[Prototype]]  对象的一个内置属性
 
 
-__proto__ （隐式原型、笨蛋 proto）
+__proto__ （隐式原型）
 
     Object.defineProperty(Object.prototype,"_proto_",{
         get:function(){

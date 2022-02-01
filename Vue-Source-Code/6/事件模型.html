@@ -16,27 +16,31 @@
                     (eventObjs[type] || (eventObjs[type] = [])).push(handler)
                 },
                 off(type, handler) {
-                    if(arguments.length === 0){
-                        eventObjs={}
-                    }else if(arguments.length ===1){
+                    if (arguments.length === 0) {
+                        eventObjs = {}
+                    } else if (arguments.length === 1) {
                         eventObjs[type] = [];
-                    }else{
-                        if(!eventObjs[type])return
+                    } else {
+                        if (!eventObjs[type]) return
                         //倒着循环
+<<<<<<< HEAD
                         for(var i=eventObjs[type].length-1;i>=0;i--){
+=======
+                        for (var i = eventObjs[type].length; i >= 0; i--) {
+>>>>>>> fe0f6186de14112b94b3d7098f32f3a60cf29b50
                             var node = eventObjs[type][i];
-                            if(node == handler){
-                                eventObjs[type].splice(i,1)
+                            if (node == handler) {
+                                eventObjs[type].splice(i, 1)
                             }
                         }
                     }
                 },
                 emit(type) {
-                    if(!eventObjs[type])return
-                    let events=eventObjs[type];
-                    let args =Array.from(arguments)
-                    for(var i=0;i<events.length;i++){
-                        events[i].apply(null,args)
+                    if (!eventObjs[type]) return
+                    let events = eventObjs[type];
+                    let args = Array.from(arguments)
+                    for (var i = 0; i < events.length; i++) {
+                        events[i].apply(null, args)
                     }
                 }
             }
