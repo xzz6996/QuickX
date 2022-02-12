@@ -5,7 +5,7 @@
 var timer = null;  //多了一个全局变量
 window.onresize = function () {
     clearTimeout(timer);
-    timer = setTimeout(function() {
+    timer = setTimeout(function () {
         testFn();
     }, 100);
 };
@@ -45,10 +45,8 @@ function throttle(fn, delay, atleast) {
     var perious = null;
     return function () {
         var data = +new Date(); //时间戳
-
         if (!perious) perious = data
-
-        if (atleast &&data - perious > atleast) {
+        if (atleast && data - perious > atleast) {
             perious = null;
             fn()
         } else {
@@ -66,13 +64,13 @@ window.onresize = throttle(testFn, 100, 500)
 
 
 
-function ppp(fn,delay) {
+function ppp(fn, delay) {
     var time = Date.now()
     return function () {
-        var ags = arguments,content = this,ntime =Date.now()
-        if(ntime-time>=delay){
+        var ags = arguments, content = this, ntime = Date.now()
+        if (ntime - time >= delay) {
             time = Date.now()
-           return fn.apply(content,ags)
+            return fn.apply(content, ags)
         }
     }
 }

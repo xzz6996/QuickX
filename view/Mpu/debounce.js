@@ -12,40 +12,40 @@
 // <input type="text" name="debounce" id="debounce"> 
 
 let dom = document.querySelector('#debounce')
-dom.addEventListener('keyup',function(e){
+dom.addEventListener('keyup', function (e) {
     debounceAjax(e.target.value)
 })
 
-let debounceAjax = debounce(ajax,3000);
+let debounceAjax = debounce(ajax, 3000);
 function ajax(args) {
-    console.log('参数为'+args,'开始ajax请求数据-----')
+    console.log('参数为' + args, '开始ajax请求数据-----')
 }
 
 /**
  *@param Function fn 延时调用函数
  *@param Number delay 延时多少秒
 */
-function debounce(fn,delay){
+function debounce(fn, delay) {
     var timer = null;
-    return function(args){
+    return function (args) {
         clearTimeout(timer)
-        timer=setTimeout(function(){
+        timer = setTimeout(function () {
             fn(args)
-        },delay)
+        }, delay)
     }
 }
 
 
-function  debounce(fn,delay) {
+function debounce(fn, delay) {
     var timer = null
     return function () {
         var content = this, args = arguments;
-        if(timer){
+        if (timer) {
             clearTimeout(timer)
             timer = null
         }
-        timer = setTimeout(()=>{
-            fn.apply(content,args)
-        },delay)
+        timer = setTimeout(() => {
+            fn.apply(content, args)
+        }, delay)
     }
 }
